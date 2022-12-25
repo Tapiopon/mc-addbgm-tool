@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minecraftにリソースパックで音声ファイルを追加するツール</title>
+  <link rel="stylesheet" media="screen and (max-width:768px)" href="./css/mobile.css">
+  <link rel="stylesheet" media="screen and (min-width:769px)" href="./css/desktop.css">
+  <script src="./coi-serviceworker.js"></script>
+  <script src="./script/ffmpeg.min.js"></script>
+  <script src="./script/jszip.min.js"></script>
+  <script src="./script/main.js"></script>
+</head>
+<body>
+  <div class="background">
+    <div>
+      <label class="files">
+        <p>音声ファイルを選択</p>
+        <input type="file" onchange="sound_load(this)" id="sound_file" style="display:none">
+      </label>
+      <p id="file_name"></p>
+      <br>
+      <label class="sound_names">
+        <input type="text" placeholder="ゲーム内でのID(英数字のみ)" id="sound_name">
+      </label>
+      <br>
+      <button onclick="add_file()" class="addfile">ファイルを追加</button>
+    </div>
+    <div class="progress">
+      <p>音声ファイル変換状況</p>
+      <progress id="ffmpegprogress" min="0" max="100" value="0"></progress>
+    </div>
+    <table class="sound_list">
+      <th id="list">
+        <li>音声リスト</li>
+      </th>
+    </table>
+    <div class="resourcepackedit">
+      <input type="text" placeholder="リソースパック名" id="resource_pack_name">
+      <input type="text" placeholder="リソースパックの説明" id="resource_pack_description">
+    </div>
+    <div>
+      <button onclick="exportfile()" class="export">エクスポート</button>
+    </div>
+    <p id="crossorigin"></p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+.background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0,#fff,#ebf6f7);
+}
+
+.files p{
+  position: relative;
+  width: 80%;
+  height: auto;
+  text-align: center;
+  font-size: 32px;
+  border: solid 1px;
+  border-radius: 30px;
+  margin: 10px auto;
+}
+
+.sound_names {
+  text-align : center;
+}
+
+.sound_names input {
+  position: relative;
+  width: 75%;
+  height: auto;
+  text-align: center;
+  border: solid 1px;
+  border-radius: 30px;
+  left:50%;
+  margin-right:-50%;
+  transform: translate(-50%);
+}
+
+.addfile {
+  position: relative;
+  width: 65%;
+  height: auto;
+  text-align: center;
+  font-size: 18px;
+  border: solid 1px;
+  border-radius: 30px;
+  left:50%;
+  margin-right:-50%;
+  transform: translate(-50%);
+  margin-top: 10px;
+  background-color: #fff;
+}
+
+.progress {
+  position: relative;
+  width: 80%;
+  height: auto;
+  text-align: center;
+  font-size: 18px;
+  margin: 10px auto;
+  border: solid 1px;
+  border-radius: 30px;
+}
+
+.sound_list {
+  position: relative;
+  width: 80%;
+  height: auto;
+  text-align: center;
+  font-size: 18px;
+  margin: 10px auto;
+  border: solid 1px;
+  border-radius: 30px;
+}
+
+.resourcepackedit {
+  position: relative;
+  width: 80%;
+  height: auto;
+  text-align: center;
+  font-size: 18px;
+  margin: 10px auto;
+  border: solid 1px;
+  border-radius: 30px;
+}
+
+.resourcepackedit input {
+  position: relative;
+  width: 75%;
+  height: auto;
+  text-align: center;
+  border: solid 1px;
+  border-radius: 30px;
+  font-size: 18px;
+  margin: 5px auto;
+}
+
+.export {
+  position: relative;
+  width: 65%;
+  height: auto;
+  text-align: center;
+  font-size: 18px;
+  border: solid 1px;
+  border-radius: 30px;
+  left:50%;
+  margin-right:-50%;
+  transform: translate(-50%);
+  margin-top: 10px;
+  background-color: #fff;
+}
+
+#file_name, .progress p {
+  position: relative;
+  width: 80%;
+  height: auto;
+  text-align: center;
+  font-size: 18px;
+  margin: 10px auto;
+}
