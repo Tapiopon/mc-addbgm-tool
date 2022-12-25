@@ -106,7 +106,9 @@ let soundfile_list = false;
 
 const sound_load_serial_number = (input) => {
   soundfile_list = input.files;
-  document.getElementById("file_name").innerText=input.files
+  for(let i=0;i<soundfile_list.length;i++){
+    document.getElementById("file_name").innerText=soundfile_list[i]
+  }
 }
 
 const add_file_serial_number = async () => {
