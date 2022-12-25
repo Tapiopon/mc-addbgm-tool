@@ -107,7 +107,7 @@ let soundfile_list = false;
 const sound_load_serial_number = (input) => {
   soundfile_list = input.files;
   for(let i=0;i<soundfile_list.length;i++){
-    document.getElementById("file_name").innerText=soundfile_list[i]
+    document.getElementById("file_name_ui2").innerText=soundfile_list[i]
   }
 }
 
