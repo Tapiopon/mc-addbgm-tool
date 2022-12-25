@@ -84,8 +84,8 @@ const add_file = async () => {
 }
 
 const exportfile = () => {
-  mcresourcefile.manifest.header.name = resource_pack_name;
-  mcresourcefile.manifest.header.description = resource_pack_description;
+  mcresourcefile.manifest.header.name = resource_pack_name.value;
+  mcresourcefile.manifest.header.description = resource_pack_description.value;
   const zip = new JSZip();
   for(let i=0;i<filenames.length;i++){
     zip.folder("sounds/tapiopon_sound").file(filenames[i]+".ogg",mcresourcefile["sounds"]["tapiopon_sound"][filenames[i]+".ogg"]);
