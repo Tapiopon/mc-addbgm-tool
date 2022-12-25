@@ -13,7 +13,11 @@
 </head>
 <body>
   <div class="background">
-    <div>
+    <select onchange="add_file_change_ui()" id="change_ui">
+      <option value="ui1">一つずつ追加</option>
+      <option value="ui2">まとめて追加</option>
+    </select>
+    <div id="add_file_ui_1">
       <label class="files">
         <p>音声ファイルを選択</p>
         <input type="file" onchange="sound_load(this)" id="sound_file" style="display:none">
@@ -25,6 +29,19 @@
       </label>
       <br>
       <button onclick="add_file()" class="addfile">ファイルを追加</button>
+    </div>
+    <div id="add_file_ui_2" style="display:none">
+      <label class="files">
+        <p>音声ファイルを選択</p>
+        <input type="file" onchange="sound_load_serial_number(this)" id="sound_file" style="display:none" multiple>
+      </label>
+      <p id="file_name"></p>
+      <br>
+      <label class="sound_names">
+        <input type="text" placeholder="ゲーム内での連番ID(英数字のみ)" id="sound_name_serial_number">
+      </label>
+      <br>
+      <button onclick="add_file_serial_number()" class="addfile">ファイルを追加</button>
     </div>
     <div class="progress">
       <p>音声ファイル変換状況</p>

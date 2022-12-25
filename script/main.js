@@ -84,6 +84,7 @@ const add_file = async () => {
 }
 
 const exportfile = () => {
+  if(!resource_pack_name.value)
   mcresourcefile.manifest.header.name = resource_pack_name.value;
   mcresourcefile.manifest.header.description = resource_pack_description.value;
   const zip = new JSZip();
@@ -99,4 +100,59 @@ const exportfile = () => {
     a.href = window.URL.createObjectURL(blob);
     a.click();
   });
+}
+
+let soundfile_list = false;
+
+const sound_load_serial_number = (input) => {
+  soundfile_list = input.files;
+  document.getElementById("file_name").innerText=input.files
+}
+
+const add_file_serial_number = async () => {
+  if (!soundfile_list || !sound_name_serial_number.value) {
+    alert("エラー\nIDを記入もしくは音声ファイルをロードしてから追加してください。");
+    return;
+  };
+  for(let i=0;i<soundfile_list.length;i++){
+    soundfile = soundfile_list[i];
+    soundname_serial_number  = sound_name_serial_number.value+i
+    if (!ffmpeg.isLoaded()) {
+      await ffmpeg.load();
+    };
+    ffmpeg.setProgress(({ ratio })=>{
+      ffmpegprogress.value = Math.floor(ratio*100);
+      if(ratio==1) ffmpegprogress.value=0
+    });
+    ffmpeg.FS('writeFile', 'load.bin', await fetchFile(soundfile));
+    await ffmpeg.run('-i', 'load.bin', 'edit.wav');
+    await ffmpeg.run('-i', 'edit.wav', 'output.ogg');
+    ffmpeg.FS('unlink', 'edit.wav');
+    const data = ffmpeg.FS('readFile','output.ogg');
+    ffmpeg.FS('unlink', 'output.ogg');
+    filenames.push(soundname_serial_number);
+    mcresourcefile["sounds"]["tapiopon_sound"][soundname_serial_number+".ogg"] = new Blob([data.buffer]);
+    mcresourcefile["sounds"]["sound_definitionsfile"]["sound_definitions"][soundname_serial_number] = {
+      "category": "music",
+      "sounds": [
+        {
+          "load_on_low_memory": true,
+          "name": "sounds/tapiopon_sound/"+soundname_serial_number
+        }
+      ]
+    };
+    soundfile = false;
+    document.getElementById("list").innerHTML += `\<li\>${soundname_serial_number}\</li\>`;
+  }
+  soundfile_list = false;
+}
+
+const add_file_change_ui = () => {
+  if(change_ui.value == "ui1"){
+    document.getElementById("add_file_ui_1").style.display = "block";
+    document.getElementById("add_file_ui_2").style.display = "none";
+  }else if(change_ui.value == "ui2"){
+    document.getElementById("add_file_ui_2").style.display = "block";
+    document.getElementById("add_file_ui_1").style.display = "none";
+  }
 }
