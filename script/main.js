@@ -84,7 +84,10 @@ const add_file = async () => {
 }
 
 const exportfile = () => {
-  if(!resource_pack_name.value)
+  if(!resource_pack_name.value) {
+    alert("エラー")
+    return;
+  };
   mcresourcefile.manifest.header.name = resource_pack_name.value;
   mcresourcefile.manifest.header.description = resource_pack_description.value;
   const zip = new JSZip();
