@@ -16,6 +16,7 @@
     <select onchange="add_file_change_ui()" id="change_ui">
       <option value="ui1">一つずつ追加</option>
       <option value="ui2">まとめて追加</option>
+      <option value="ui3">リソースパックをまとめる</option>
     </select>
     <div id="add_file_ui_1">
       <label class="files">
@@ -42,6 +43,13 @@
       </label>
       <br>
       <button onclick="add_file_serial_number()" class="addfile">ファイルを追加</button>
+    </div>
+    <div id="join_file_ui_1">
+      <label class="files">
+        <p>MCPACKファイルを選択</p>
+        <input type="file" onchange="mcpack_load(this)" id="sound_file" style="display:none" multiple>
+        <button onclick="mcpack_join()" class="addfile">ファイルを統合</button>
+      </label>
     </div>
     <div class="progress">
       <p>音声ファイル変換状況</p>

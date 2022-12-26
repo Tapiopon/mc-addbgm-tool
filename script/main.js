@@ -44,6 +44,9 @@ const mcresourcefile = {
 
 let soundfile = false;
 let filenames = [];
+let sharedfile_data;
+let soundfile_list = false;
+let mcpack_list = false;
 
 const sound_load = (input) => {
   soundfile = input.files[0];
@@ -99,13 +102,11 @@ const exportfile = () => {
   zip.file("manifest.json", JSON.stringify(mcresourcefile["manifest"]));
   zip.generateAsync({type:"blob"}).then((blob) => {
     const a = document.createElement("a");
-    a.download = `${Date.now().toString(36)}.mcpack`;
+    a.download = `${resource_pack_name.value}.mcpack`;
     a.href = window.URL.createObjectURL(blob);
     a.click();
   });
 }
-
-let soundfile_list = false;
 
 const sound_load_serial_number = (input) => {
   soundfile_list = input.files;
@@ -152,12 +153,61 @@ const add_file_serial_number = async () => {
   soundfile_list = false;
 }
 
+const mcpack_load = (input) => {
+  mcpack_list = input.files
+}
+
+const mcpack_join = () => {
+  console.log("join")
+  const zip = new JSZip();
+  for(let i=0;i<mcpack_list.length;i++){
+    const reader = new FileReader();
+    reader.onload = (inport) => {
+      zip.loadAsync(inport.target.result).then(async()=>{
+        zip.file("sounds/sound_definitions.json")
+        .async("text")
+        .then((data)=>{
+          let jsondata = JSON.parse(data);
+          if(Object.keys(jsondata["sound_definitions"]).length !== 0) {
+            for(let n=0;n<Object.keys(jsondata["sound_definitions"]).length;n++){
+              filenames.push(Object.keys(jsondata["sound_definitions"])[n]);
+              zip.file("sounds/tapiopon_sound/"+Object.keys(jsondata["sound_definitions"])[n]+".ogg")
+              .async("blob")
+              .then((blob_data)=>{
+                mcresourcefile["sounds"]["tapiopon_sound"][Object.keys(jsondata["sound_definitions"])[n]+".ogg"] = blob_data;
+                mcresourcefile["sounds"]["sound_definitionsfile"]["sound_definitions"][Object.keys(jsondata["sound_definitions"])[n]] = {
+                  "category": "music",
+                  "sounds": [
+                    {
+                      "load_on_low_memory": true,
+                      "name": "sounds/tapiopon_sound/"+Object.keys(jsondata["sound_definitions"])[n]
+                    }
+                  ]
+                };
+                document.getElementById("list").innerHTML += `\<li\>${Object.keys(jsondata["sound_definitions"])[n]}\</li\>`;
+              })
+            }
+          }
+        });
+      });
+    };
+    reader.readAsArrayBuffer(mcpack_list[i])
+  }
+}
+
+
 const add_file_change_ui = () => {
   if(change_ui.value == "ui1"){
     document.getElementById("add_file_ui_1").style.display = "block";
     document.getElementById("add_file_ui_2").style.display = "none";
+    document.getElementById("join_file_ui_1").style.display = "none";
   }else if(change_ui.value == "ui2"){
     document.getElementById("add_file_ui_2").style.display = "block";
     document.getElementById("add_file_ui_1").style.display = "none";
+    document.getElementById("join_file_ui_1").style.display = "none";
+  }else if(change_ui.value == "ui3"){
+    document.getElementById("add_file_ui_1").style.display = "none";
+    document.getElementById("add_file_ui_2").style.display = "none";
+    document.getElementById("join_file_ui_1").style.display = "block";
   }
 }
