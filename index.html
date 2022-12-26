@@ -50,14 +50,15 @@
         <input type="file" onchange="mcpack_load(this)" id="sound_file" style="display:none" multiple>
         <button onclick="mcpack_join()" class="addfile">ファイルを統合</button>
       </label>
+      <p id="file_name_ui3"></p>
     </div>
     <div class="progress">
       <p>音声ファイル変換状況</p>
       <progress id="ffmpegprogress" min="0" max="100" value="0"></progress>
     </div>
     <table class="sound_list">
-      <th id="list">
-        <li>音声リスト</li>
+      <th id="list" style="list-style:none">
+        <li>音声リスト<br>(タップして再生できます)</li>
       </th>
     </table>
     <div class="resourcepackedit">

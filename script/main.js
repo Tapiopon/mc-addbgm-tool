@@ -83,7 +83,8 @@ const add_file = async () => {
     ]
   };
   soundfile = false;
-  document.getElementById("list").innerHTML += `\<li\>${sound_name.value}\</li\>`;
+  document.getElementById("list").innerHTML += `\<li onclick="play_sound('${window.URL.createObjectURL(new Blob([data.buffer]))}')"\>${sound_name.value}\</li\>`;
+  document.getElementById("file_name").innerText = "";
 }
 
 const exportfile = () => {
@@ -111,7 +112,7 @@ const exportfile = () => {
 const sound_load_serial_number = (input) => {
   soundfile_list = input.files;
   for(let i=0;i<soundfile_list.length;i++){
-    document.getElementById("file_name_ui2").innerText=soundfile_list[i]
+    document.getElementById("file_name_ui2").innerText += soundfile_list[i].name+"\n";
   }
 }
 
@@ -148,13 +149,17 @@ const add_file_serial_number = async () => {
       ]
     };
     soundfile = false;
-    document.getElementById("list").innerHTML += `\<li\>${soundname_serial_number}\</li\>`;
+    document.getElementById("list").innerHTML += `\<li onclick="play_sound('${window.URL.createObjectURL(new Blob([data.buffer]))}')"\>${soundname_serial_number}\</li\>`;
   }
   soundfile_list = false;
+  document.getElementById("file_name_ui2").innerText = "";
 }
 
 const mcpack_load = (input) => {
-  mcpack_list = input.files
+  mcpack_list = input.files;
+  for(let i=0;i<mcpack_list.length;i++){
+    document.getElementById("file_name_ui3").innerText += mcpack_list[i].name+"\n";
+  }
 }
 
 const mcpack_join = () => {
@@ -191,7 +196,7 @@ const mcpack_join = () => {
                       }
                     ]
                   };
-                  document.getElementById("list").innerHTML += `\<li\>${Object.keys(jsondata["sound_definitions"])[n]}\</li\>`;
+                  document.getElementById("list").innerHTML += `\<li onclick="play_sound('${window.URL.createObjectURL(blob_data)}')"\>${Object.keys(jsondata["sound_definitions"])[n]}\</li\>`;
                 })
               }
             }
@@ -218,4 +223,13 @@ const add_file_change_ui = () => {
     document.getElementById("add_file_ui_2").style.display = "none";
     document.getElementById("join_file_ui_1").style.display = "block";
   }
+}
+
+let aud = new Audio();
+
+const play_sound = (data) => {
+  aud.pause();
+  aud = new Audio(data);
+  aud.play();
+  
 }

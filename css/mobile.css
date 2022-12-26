@@ -109,7 +109,7 @@
   background-color: #fff;
 }
 
-#file_name, .progress p {
+#file_name, #file_name_ui2, #file_name_ui3, .progress p {
   position: relative;
   width: 80%;
   height: auto;
