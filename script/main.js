@@ -170,22 +170,30 @@ const mcpack_join = () => {
           let jsondata = JSON.parse(data);
           if(Object.keys(jsondata["sound_definitions"]).length !== 0) {
             for(let n=0;n<Object.keys(jsondata["sound_definitions"]).length;n++){
-              filenames.push(Object.keys(jsondata["sound_definitions"])[n]);
-              zip.file("sounds/tapiopon_sound/"+Object.keys(jsondata["sound_definitions"])[n]+".ogg")
-              .async("blob")
-              .then((blob_data)=>{
-                mcresourcefile["sounds"]["tapiopon_sound"][Object.keys(jsondata["sound_definitions"])[n]+".ogg"] = blob_data;
-                mcresourcefile["sounds"]["sound_definitionsfile"]["sound_definitions"][Object.keys(jsondata["sound_definitions"])[n]] = {
-                  "category": "music",
-                  "sounds": [
-                    {
-                      "load_on_low_memory": true,
-                      "name": "sounds/tapiopon_sound/"+Object.keys(jsondata["sound_definitions"])[n]
-                    }
-                  ]
-                };
-                document.getElementById("list").innerHTML += `\<li\>${Object.keys(jsondata["sound_definitions"])[n]}\</li\>`;
-              })
+              filename_bool = true;
+              for(let x=0;x<filenames.length;x++){
+                if(Object.keys(jsondata["sound_definitions"])[n] == filenames[x]){
+                  filename_bool = false
+                }
+              }
+              if(filename_bool){
+                filenames.push(Object.keys(jsondata["sound_definitions"])[n]);
+                zip.file("sounds/tapiopon_sound/"+Object.keys(jsondata["sound_definitions"])[n]+".ogg")
+                .async("blob")
+                .then((blob_data)=>{
+                  mcresourcefile["sounds"]["tapiopon_sound"][Object.keys(jsondata["sound_definitions"])[n]+".ogg"] = blob_data;
+                  mcresourcefile["sounds"]["sound_definitionsfile"]["sound_definitions"][Object.keys(jsondata["sound_definitions"])[n]] = {
+                    "category": "music",
+                    "sounds": [
+                      {
+                        "load_on_low_memory": true,
+                        "name": "sounds/tapiopon_sound/"+Object.keys(jsondata["sound_definitions"])[n]
+                      }
+                    ]
+                  };
+                  document.getElementById("list").innerHTML += `\<li\>${Object.keys(jsondata["sound_definitions"])[n]}\</li\>`;
+                })
+              }
             }
           }
         });
