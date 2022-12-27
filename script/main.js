@@ -101,7 +101,13 @@ const exportfile = () => {
   zip.folder("sounds").file("sound_definitions.json", JSON.stringify(mcresourcefile["sounds"]["sound_definitionsfile"]));
   zip.file("pack_icon.png", "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAACXSURBVDiNrVO7EoAgDCucX8FjZOT/P8TREeU3cPDqAaaop5mgR0JCiyIBxrpS7/O2KnTuUmTivKSmHoOHQs3GWFd6Yo8YfCNyLp6QkYhGZLaLIhAd8TiqfnTlAOqNdeRKdIBiIECBGLzYxh4TKs5LuhCkmDpvq0LqTJCI3MphF9jJ6JE/D9J/o1yLsP2eSHTzmZAQQ/rOO3V/WWrJwh76AAAAAElFTkSuQmCC", {base64: true});
   zip.file("manifest.json", JSON.stringify(mcresourcefile["manifest"]));
-  zip.generateAsync({type:"blob"}).then((blob) => {
+  zip.generateAsync({
+    type:"blob",
+    compression: "DEFLATE",
+    compressionOptions: {
+      level: 9
+    }
+  }).then((blob) => {
     const a = document.createElement("a");
     a.download = `${resource_pack_name.value}.mcpack`;
     a.href = window.URL.createObjectURL(blob);
@@ -231,5 +237,4 @@ const play_sound = (data) => {
   aud.pause();
   aud = new Audio(data);
   aud.play();
-  
 }
